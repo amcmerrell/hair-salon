@@ -10,5 +10,11 @@
         <li><a href="/stylists/$client.getStylistId()/clients/$client.getId()">$client.getName()</a></li>
       #end
     </ul>
+    <a type="button" class="btn btn-primary" href="/">Back home</a>
+    <a type="button" class="btn btn-warning" href="/stylists/$stylist.getId()/update">Update stylist</a>
+    <p></p>
+    <form action="/stylists/$stylist.getId()/delete" method="post">
+      <button class="btn btn-danger" >Delete stylist</button>
+    </form>
   </div>
 </div>
