@@ -4,11 +4,16 @@ import org.sql2o.*;
 import java.util.List;
 
 public class ClientTest {
+  Client clientOne;
+  Client clientTwo;
 
   @Before
   public void setUp() {
     DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/hair_salon_test", "postgres", "panthers");
-    Client testClient = new Client("Andrew", "919-941-6987", 2);
+    clientOne = new Client("Andrew", "919-941-6987", 2);
+    clientOne.save();
+    clientTwo = new Client("Sarah", "919-847-8745", 2);
+    clientTwo.save();
   }
 
   @After
@@ -21,26 +26,22 @@ public class ClientTest {
 
   @Test
   public void constructor_clientInstantiatesCorrectly_true() {
-    Client testClient = new Client("Andrew", "919-941-6987", 2);
-    assertTrue(testClient instanceof Client);
+    assertTrue(clientOne instanceof Client);
   }
 
   @Test
   public void getName_returnsCorrectName_Andrew() {
-    Client testClient = new Client("Andrew", "919-941-6987", 2);
-    assertEquals("Andrew", testClient.getName());
+    assertEquals("Andrew", clientOne.getName());
   }
 
   @Test
   public void getPhoneNumber_returnsCorrectPhoneNumber_919_941_6987() {
-    Client testClient = new Client("Andrew", "919-941-6987", 2);
-    assertEquals("919-941-6987", testClient.getPhoneNumber());
+    assertEquals("919-941-6987", clientOne.getPhoneNumber());
   }
 
   @Test
   public void getStylistId_returnsCorrectStylistId_2() {
-    Client testClient = new Client("Andrew", "919-941-6987", 2);
-    assertEquals(2, testClient.getStylistId());
+    assertEquals(2, clientOne.getStylistId());
   }
 
   @Test
@@ -52,19 +53,18 @@ public class ClientTest {
 
   @Test
   public void all_returnsAllInstancesOfClient_true() {
-    Client clientOne = new Client("Andrew", "919-941-6987", 2);
-    clientOne.save();
-    Client clientTwo = new Client("Sarah", "919-847-8745", 2);
-    clientTwo.save();
     assertTrue(Client.all().get(0).equals(clientOne));
     assertTrue(Client.all().get(1).equals(clientTwo));
   }
 
   @Test
   public void save_savesIntoDatabase_true() {
-    Client testClient = new Client("Andrew", "919-941-6987", 2);
-    testClient.save();
-    assertTrue(Client.all().get(0).equals(testClient));
+    assertTrue(Client.all().get(0).equals(clientOne));
   }
 
+  @Test
+  public void save_assignsIdToObject() {
+    Client savedClient = Client.all().get(0);
+    assertEquals(clientOne.getId(), savedClient.getId());
+  }
 }
