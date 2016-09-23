@@ -30,23 +30,25 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/clients/new", (request, response) -> {
+    post("/stylists/:id/clients/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       String clientName = request.queryParams("client-name");
       String clientPhoneNumber = request.queryParams("client-phone");
       int clientStylistId = Integer.parseInt(request.queryParams("stylistId"));
       Client newClient = new Client(clientName, clientPhoneNumber, clientStylistId);
       newClient.save();
-      response.redirect("/");
+      int clientId = newClient.getId();
+      response.redirect("/stylists/" + clientStylistId + "/clients/" + clientId);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
     get("/stylists/:stylist_id/clients/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      Stylist aStylist = Stylist.find(Integer.parseInt(request.params("id")));
+      Stylist aStylist = Stylist.find(Integer.parseInt(request.params("stylist_id")));
       Client aClient = Client.find(Integer.parseInt(request.params("id")));
-      model.put("client", Client.all());
-      model.put("template", "templates/index.vtl");
+      model.put("stylist", aStylist);
+      model.put("client", aClient);
+      model.put("template", "templates/client.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

@@ -37,7 +37,7 @@
   <!-- Begin Client Column -->
   <div class="col-md-4">
     <h3>Add a new client</h3>
-    <form action='/clients/new' method='post'>
+    <form action='/stylists/:location_id/clients/new' method='post'>
       <div class="form-group">
         <label for="client-name">Enter client name:</label>
         <input id="client-name" name="client-name" class="form-control" type="text">
@@ -61,7 +61,7 @@
       <h3>Current Clients</h3>
       <ul>
         #foreach ($client in $clients)
-          <li><a href="/clients/$client.getId()">$client.getName()</a></li>
+          <li><a href="/stylists/$client.getStylistId()/clients/$client.getId()">$client.getName()</a></li>
         #end
       </ul>
     #else
