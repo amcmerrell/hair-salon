@@ -9,7 +9,7 @@ public class StylistTest {
 
   @Before
   public void setUp() {
-    DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/hair_salon_test", "postgres", "panthers");
+    DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/hair_salon_test", null, null);
     stylistOne = new Stylist("Andrew", "Mon, Tue, Wed", "919-941-6987");
     stylistOne.save();
     stylistTwo = new Stylist("Sarah", "Fri, Sat, Sun", "919-847-8745");

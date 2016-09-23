@@ -11,7 +11,7 @@ public class ClientTest {
 
   @Before
   public void setUp() {
-    DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/hair_salon_test", "postgres", "panthers");
+    DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/hair_salon_test", null, null);
     stylistOne = new Stylist("Pete", "Wed, Thu, Fri", "919-941-6987");
     stylistOne.save();
     stylistTwo = new Stylist("Sally", "Mon, Wed, Fri", "919-847-8745");
