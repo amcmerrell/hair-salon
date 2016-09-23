@@ -57,6 +57,34 @@ public class Client {
     }
   }
 
+  private void update(String columnName, String value) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE clients SET " + columnName + " = :" + columnName + " WHERE id = :id";
+      con.createQuery(sql)
+        .addParameter(columnName, value)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
+  public void updateName(String name) {
+    update("name", name);
+  }
+
+  public void updatePhoneNumber(String phoneNumber) {
+    update("phoneNumber", phoneNumber);
+  }
+
+  public void updateStylistId(int stylistId) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE clients SET stylistId = :stylistId WHERE id = :id";
+      con.createQuery(sql)
+        .addParameter("stylistId", stylistId)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
   @Override
   public boolean equals(Object otherClient) {
     if (!(otherClient instanceof Client)) {

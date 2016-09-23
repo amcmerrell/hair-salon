@@ -6,11 +6,17 @@ import java.util.List;
 public class ClientTest {
   Client clientOne;
   Client clientTwo;
+  Stylist stylistOne;
+  Stylist stylistTwo;
 
   @Before
   public void setUp() {
     DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/hair_salon_test", "postgres", "panthers");
-    clientOne = new Client("Andrew", "919-941-6987", 2);
+    stylistOne = new Stylist("Pete", "919-941-6987");
+    stylistOne.save();
+    stylistTwo = new Stylist("Sally", "919-847-8745");
+    stylistTwo.save();
+    clientOne = new Client("Andrew", "919-941-6987", stylistOne.getId());
     clientOne.save();
     clientTwo = new Client("Sarah", "919-847-8745", 2);
     clientTwo.save();
@@ -20,7 +26,9 @@ public class ClientTest {
   public void tearDown() {
     try(Connection con = DB.sql2o.open()) {
       String deleteClientsQuery = "DELETE FROM clients *;";
+      String deleteStylistsQuery = "DELETE FROM stylists *;";
       con.createQuery(deleteClientsQuery).executeUpdate();
+      con.createQuery(deleteStylistsQuery).executeUpdate();
     }
   }
 
@@ -41,7 +49,7 @@ public class ClientTest {
 
   @Test
   public void getStylistId_returnsCorrectStylistId_2() {
-    assertEquals(2, clientOne.getStylistId());
+    assertEquals(stylistOne.getId(), clientOne.getStylistId());
   }
 
   @Test
@@ -72,4 +80,23 @@ public class ClientTest {
   public void find_returnsClientWithSameId_true() {
     assertEquals(clientTwo, Client.find(clientTwo.getId()));
   }
+
+  @Test
+  public void updateName_updatesClientName_true() {
+    clientOne.updateName("Pete");
+    assertEquals("Pete", Client.find(clientOne.getId()).getName());
+  }
+
+  @Test
+  public void updatePhoneNumber_updatesClientPhoneNumber_true() {
+    clientOne.updatePhoneNumber("730-729-9732");
+    assertEquals("730-729-9732", Client.find(clientOne.getId()).getPhoneNumber());
+  }
+
+  @Test
+  public void updateStylistId_updatesClientStylistId_true() {
+    clientOne.updateStylistId(stylistTwo.getId());
+    assertEquals(stylistTwo.getId(), Client.find(clientOne.getId()).getStylistId());
+  }
+
 }
