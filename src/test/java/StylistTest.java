@@ -66,6 +66,11 @@ public class StylistTest {
   }
 
   @Test
+  public void find_returnsStylistWithSameId_true() {
+    assertEquals(stylistTwo, Stylist.find(stylistTwo.getId()));
+  }
+
+  @Test
   public void getClients_returnsCorrectClients_true() {
     Client clientOne = new Client("Billy", "857-294-1648", stylistOne.getId());
     clientOne.save();
@@ -74,4 +79,5 @@ public class StylistTest {
     List<Client> testList = stylistOne.getClients();
     assertTrue(!(testList.contains(clientTwo))  && testList.contains(clientOne));
   }
+
 }
