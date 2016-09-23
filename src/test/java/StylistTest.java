@@ -10,9 +10,9 @@ public class StylistTest {
   @Before
   public void setUp() {
     DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/hair_salon_test", "postgres", "panthers");
-    stylistOne = new Stylist("Andrew", "919-941-6987");
+    stylistOne = new Stylist("Andrew", "Mon, Tue, Wed", "919-941-6987");
     stylistOne.save();
-    stylistTwo = new Stylist("Sarah", "919-847-8745");
+    stylistTwo = new Stylist("Sarah", "Fri, Sat, Sun", "919-847-8745");
     stylistTwo.save();
   }
 
@@ -37,14 +37,19 @@ public class StylistTest {
   }
 
   @Test
+  public void getWorkDays_returnsCorrectWorkDays_Mon_Tue_Wed() {
+    assertEquals("Mon, Tue, Wed", stylistOne.getWorkDays());
+  }
+
+  @Test
   public void getPhoneNumber_returnsCorrectPhoneNumber_919_941_6987() {
     assertEquals("919-941-6987", stylistOne.getPhoneNumber());
   }
 
   @Test
   public void equals_returnsTrueIfFieldsAreSame_true() {
-    Stylist stylistEqualsOne = new Stylist("Andrew", "919-941-6987");
-    Stylist stylistEqualsTwo = new Stylist("Andrew", "919-941-6987");
+    Stylist stylistEqualsOne = new Stylist("Andrew", "Mon, Tue, Wed", "919-941-6987");
+    Stylist stylistEqualsTwo = new Stylist("Andrew", "Mon, Tue, Wed", "919-941-6987");
     assertTrue(stylistEqualsOne.equals(stylistEqualsTwo));
   }
 
@@ -90,6 +95,12 @@ public class StylistTest {
   public void updatePhoneNumber_updatesStylistPhoneNumber_true() {
     stylistOne.updatePhoneNumber("730-729-9732");
     assertEquals("730-729-9732", Stylist.find(stylistOne.getId()).getPhoneNumber());
+  }
+
+  @Test
+  public void updateWorkDays_updatesStylistWorkDays_true() {
+    stylistOne.updateWorkDays("Mon, Wed, Fri");
+    assertEquals("Mon, Wed, Fri", Stylist.find(stylistOne.getId()).getWorkDays());
   }
 
   @Test

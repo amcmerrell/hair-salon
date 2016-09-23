@@ -4,12 +4,12 @@ import java.util.List;
 public class Stylist {
   private int id;
   private String name;
-  // private String workDays;
+  private String workDays;
   private String phoneNumber;
 
-  public Stylist(String name, String phoneNumber) {
+  public Stylist(String name, String workDays, String phoneNumber) {
     this.name = name;
-    // this.workDays = workDays;
+    this.workDays = workDays;
     this.phoneNumber = phoneNumber;
   }
 
@@ -19,6 +19,10 @@ public class Stylist {
 
   public String getName() {
     return name;
+  }
+
+  public String getWorkDays() {
+    return workDays;
   }
 
   public String getPhoneNumber() {
@@ -34,10 +38,11 @@ public class Stylist {
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO stylists (name, phoneNumber) VALUES (:name, :phoneNumber)";
+      String sql = "INSERT INTO stylists (name, phoneNumber, workDays) VALUES (:name, :phoneNumber, :workDays)";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("name", this.name)
         .addParameter("phoneNumber", this.phoneNumber)
+        .addParameter("workDays", this.workDays)
         .executeUpdate()
         .getKey();
     }
@@ -75,6 +80,10 @@ public class Stylist {
     update("name", name);
   }
 
+  public void updateWorkDays(String workDays) {
+    update("workDays", workDays);
+  }
+
   public void updatePhoneNumber(String phoneNumber) {
     update("phoneNumber", phoneNumber);
   }
@@ -96,7 +105,8 @@ public class Stylist {
       Stylist newStylist = (Stylist) otherStylist;
       return this.getId() == newStylist.getId() &&
         this.getName().equals(newStylist.getName()) &&
-        this.getPhoneNumber().equals(newStylist.getPhoneNumber());
+        this.getPhoneNumber().equals(newStylist.getPhoneNumber()) &&
+        this.getWorkDays().equals(newStylist.getWorkDays());
     }
   }
 }
