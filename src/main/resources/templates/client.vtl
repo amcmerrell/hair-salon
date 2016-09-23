@@ -4,5 +4,11 @@
     <h4>$client.getName()</h4>
     <p><strong>Stylist:</strong> $stylist.getName()</p>
     <p><strong>Phone Number:</strong> $client.getPhoneNumber()</p>
+    <a type="button" class="btn btn-primary" href="/">Back home</a>
+    <a type="button" class="btn btn-warning" href="/stylists/$stylist.getId()/clients/$client.getId()/update">Update client</a>
+    <p></p>
+    <form action="/stylists/$client.getClientId()/clients/$client.getId()/delete" method="post">
+      <button class="btn btn-danger" >Delete client</button>
+    </form>
   </div>
 </div>
