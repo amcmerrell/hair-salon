@@ -99,4 +99,11 @@ public class ClientTest {
     assertEquals(stylistTwo.getId(), Client.find(clientOne.getId()).getStylistId());
   }
 
+  @Test
+  public void delete_deletesClient_true() {
+    int deletedId = clientOne.getId();
+    clientOne.delete();
+    assertNull(Client.find(deletedId));
+  }
+
 }

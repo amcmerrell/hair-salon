@@ -80,4 +80,23 @@ public class StylistTest {
     assertTrue(!(testList.contains(clientTwo))  && testList.contains(clientOne));
   }
 
+  @Test
+  public void updateName_updatesStylistName_true() {
+    stylistOne.updateName("Pete");
+    assertEquals("Pete", Stylist.find(stylistOne.getId()).getName());
+  }
+
+  @Test
+  public void updatePhoneNumber_updatesStylistPhoneNumber_true() {
+    stylistOne.updatePhoneNumber("730-729-9732");
+    assertEquals("730-729-9732", Stylist.find(stylistOne.getId()).getPhoneNumber());
+  }
+
+  @Test
+  public void delete_deletesStylist_true() {
+    int deletedId = stylistOne.getId();
+    stylistOne.delete();
+    assertNull(Stylist.find(deletedId));
+  }
+
 }
