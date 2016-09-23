@@ -20,7 +20,9 @@ public class StylistTest {
   public void tearDown() {
     try(Connection con = DB.sql2o.open()) {
       String deleteStylistsQuery = "DELETE FROM stylists *;";
+      String deleteClientsQuery = "DELETE FROM clients *;";
       con.createQuery(deleteStylistsQuery).executeUpdate();
+      con.createQuery(deleteClientsQuery).executeUpdate();
     }
   }
 
@@ -61,5 +63,15 @@ public class StylistTest {
   public void save_assignsIdToObject() {
     Stylist savedStylist = Stylist.all().get(0);
     assertEquals(stylistOne.getId(), savedStylist.getId());
+  }
+
+  @Test
+  public void getClients_returnsCorrectClients_true() {
+    Client clientOne = new Client("Billy", "857-294-1648", stylistOne.getId());
+    clientOne.save();
+    Client clientTwo = new Client("Sally", "567-294-3448", stylistTwo.getId());
+    clientTwo.save();
+    List<Client> testList = stylistOne.getClients();
+    assertTrue(!(testList.contains(clientTwo))  && testList.contains(clientOne));
   }
 }
