@@ -26,7 +26,16 @@ public class App {
       String stylistPhoneNumber = request.queryParams("stylist-phone");
       Stylist newStylist = new Stylist(stylistName, stylistWorkDays, stylistPhoneNumber);
       newStylist.save();
-      response.redirect("/");
+      response.redirect("/stylists/" + newStylist.getId());
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/stylists/:stylist_id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Stylist aStylist = Stylist.find(Integer.parseInt(request.params("stylist_id")));
+      model.put("stylist", aStylist);
+      model.put("clients", aStylist.getClients());
+      model.put("template", "templates/stylist.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
