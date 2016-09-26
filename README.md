@@ -1,4 +1,4 @@
-# _Java Dictionary_
+# _Hair Salon_
 
 #### _Web application for a hair salon, using Java and PostgreSQL to store and display user data, Sep. 23, 2016_
 
