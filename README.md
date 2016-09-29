@@ -17,10 +17,10 @@ _This web application intakes user data about hair salon clients and stylists to
 #### Database Setup
 * _Start postgres in your terminal by entering "postgres, and in another tab, run "psql"."_
 * _When psql is successfully running, use "CREATE DATABASE hair_salon;"._
-* _Next, run "CREATE DATABASE hair_salon;"_
-* _Once the table is created, enter "CREATE TABLE stylist (id serial PRIMARY KEY, name varchar, phoneNumber varchar, workDays varchar);"._
-* _Finally, create the client table by entering "CREATE TABLE (id serial PRIMARY KEY, name varchar, phoneNumber varchar, stylistId int);"._
-* _If you would like to run the tests, you can copy this database by running "CREATE DATABASE hair_salon_test WITH TEMPLATE hair_salon._
+* _Next, run "\c hair_salon;"_
+* _Once the database is created, enter "CREATE TABLE stylists (id serial PRIMARY KEY, name varchar, phoneNumber varchar, workDays varchar);"._
+* _Finally, create the client table by entering "CREATE TABLE clients (id serial PRIMARY KEY, name varchar, phoneNumber varchar, stylistId int);"._
+* _If you would like to run the tests, you can copy this database by running "CREATE DATABASE hair_salon_test WITH TEMPLATE hair_salon;"._
 
 #### Running the Application
 * _Navigate into the hair-salon folder you created and use "gradle run" in the command line._
